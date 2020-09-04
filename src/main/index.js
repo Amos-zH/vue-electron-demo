@@ -25,6 +25,7 @@ function createWindow () {
     width: 1000,
     webPreferences: {
       nodeIntegration: true, // 是否开启node集成
+      enableRemoteModule: true, // 是否开启 remote 模块
       // 在页面运行其他脚本之前预先加载指定的脚本 无论页面是否集成Node, 此脚本都可以访问所有Node API 脚本路径为文件的绝对路径
       // 当 node integration 关闭时, 预加载的脚本将从全局范围重新引入node的全局引用标志
       preload: path.join(__dirname, 'main_preload.js')
@@ -39,7 +40,8 @@ function createWindow () {
   })
 }
 
-app.on('ready', createWindow)
+// app.on('ready', createWindow)
+app.whenReady().then(createWindow)
 // 当所有 Window 都关闭后调用，其它平台调用 quit 会关闭程序，mac 还是会显示在菜单栏
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -48,7 +50,10 @@ app.on('window-all-closed', () => {
 })
 
 app.on('activate', () => {
-  if (mainWindow === null) {
+  // if (mainWindow === null) {
+  //   createWindow()
+  // }
+  if (BrowserWindow.getAllWindows().length === 0) {
     createWindow()
   }
 })

@@ -92,12 +92,12 @@ export default {
         },
         handlePack () {
             this.$refs.packForm.validate((valid) => {
-            if (valid) {
-                alert('submit!');
-            } else {
-                console.log('error submit!!');
-                return false;
-            }
+                if (valid) {
+                    alert('submit!');
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
             });
         },
         resetForm () {
